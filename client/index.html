@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Quiz o Nation</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	</script>
+	<script src="/socket.io/socket.io.js">
+	</script>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat+Subrayada:wght@700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+	<a onclick="showLobby();" href="#">
+		<h1 style="font-family: 'Montserrat Subrayada', sans-serif; font-size:60px;">Quiz - O - Nation</h1>
+	</a>
+	<br><br>
+
+    <div id="lobby">
+
+        <div id="collapsible">
+            <button type="button" class="collapsible">How To Play</button>
+            <div class="content">
+                <p style="font-family: 'Open Sans', sans-serif;">Quiz o Nation is a fun little multiplayer trivia game all
+                    about Indian Ethos and culture. Below you'll see a Game Creation menu, and underneath that lies the lobby, where you
+                    can join other games. When people join the lobby and you press Start, you will automatically be
+                    placed into teams.</p>
+                <p style="font-family: 'Open Sans', sans-serif;">The goal of each game is to fill in the missing letters
+                    of a word by answering Indian heritage related questions. If you get the question correct, one letter will go
+                    into the right spot. However, if you get it wrong, an incorrect letter will go into that spot. You
+                    can use the previous letters to help you guess if you can't narrow the answer down to one choice.
+                    Each game has exactly 8 questions for you to enjoy. Have fun!</p>
+            </div>
+        </div>
+        <br><br>
+
+        <div id="game-create-selector">
+
+            <p class="large" style="font-family: 'Open Sans', sans-serif;"> Create a game:</p>
+
+            <table class="center">
+                <tr>
+                    <td>
+                        <p class="large" style="font-family: 'Open Sans', sans-serif;"><b>Game Name: &nbsp</b></p>
+                    </td>
+                    <td>
+                        <input class="w3-input" type="text" id="gameName" placeholder="Name" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <!--<td>
+                    <p class="large" style="font-family: 'Open Sans', sans-serif;"><b>Game Mode:</b></p>
+                </td>
+                <td><select id="gamemode" style="width:130px;">
+                        <option value="multiplayer">Multiplayer</option>
+                    </select>
+                </td>-->
+                </tr>
+
+                <tr>
+                    <td>
+                        <p class="large" style="font-family: 'Open Sans', sans-serif;"><b>Time Limit
+                               : </b></p>
+                    </td>
+                    <td style="text-align: left;">
+                        <input type="number" id="timeLimit" name="timeLimit" min="1" max="60" value="15" /> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button id="createGame" class="center" style="font-family: 'Open Sans', sans-serif;font-weight:bold;" "> Create
+                            Game</button>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <br><br>
+
+        <section style="border-style: solid; padding:10px;" id="games">
+        </section>
+    </div>
+
+
+    <div style="display: none;" id="singlePlayer">
+        <button onclick="showLobby();" class="center"> Lobby</button>
+        <h1>Single Player</h1>
+
+        <section style="border-style: solid; padding:10px;" id="games">
+        </section>
+    </div>
+
+    <div style="display: none;font-weight:bold;" id="multiPlayer">
+        <button onclick="showLobby();"> Lobby</button>
+        <button id="multiStart"> Start</button>
+
+        <h1 style="font-family: 'Montserrat Subrayada', sans-serif;"> Multiplayer</h1>
+        <!--<p style="font-family: 'Open Sans', sans-serif;"> Teams will be randomly assigned when the game starts</p>-->
+        <h1 style="font-family: 'Montserrat Subrayada', sans-serif;">Timer:</h1>
+        <h1 id="timer" style="font-family: 'Open Sans', sans-serif;"></h1>
+        <h2 id="questionMessage" style="font-family: 'Open Sans', sans-serif;"></h2>
+        <section id="currentWordBox" style="border-style: solid; padding:10px;">
+            <b>
+                <h3 id="currentWord" style="font-family: 'Open Sans', sans-serif;"></h3>
+            </b>
+        </section>
+        <br />
+        <section id="questionBox" style="border-style: solid; padding:10px;">
+            <p id="question" style="font-family: 'Open Sans', sans-serif; font-size:20px"></p>
+        </section>
+        <br />
+        <section style="text-align: center; border-style: solid; padding:10px;font-weight:bold;" id="choices">
+            <div>
+                <button onclick="submitAns(1);" id="btnChoice1" style="margin:5px; padding: 20px; width:20%">
+                    <p id="answer1">Answer</p><br />
+                    <p id="letter1">Letter</p><br />
+                </button>
+                <button onclick="submitAns(2);" id="btnChoice2" style="margin:5px; padding: 20px; width:20%">
+                    <p id="answer2">Answer</p><br />
+                    <p id="letter2">Letter</p></br>
+                </button>
+                <button onclick="submitAns(3);" id="btnChoice3" style="margin:5px; padding: 20px; width:20%">
+                    <p id="answer3">Answer</p><br />
+                    <p id="letter3">Letter</p></br>
+                </button>
+                <button onclick="submitAns(4);" id="btnChoice4" style="margin:5px; padding: 20px; width:20%">
+                    <p id="answer4">Answer</p><br />
+                    <p id="letter4">Letter</p></br>
+                </button>
+            </div>
+        </section>
+
+    </div>
+</body>
+<script src="main.js"></script>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+
+</html>

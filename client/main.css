@@ -1,0 +1,99 @@
+body {
+  background: skyblue;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+}
+
+#collapsible {
+  margin-left:20%;
+  margin-right:20%;
+	background-color: #c6fc03;
+}
+
+#games {
+  width: 80%;
+  height: 400px;
+  overflow: scroll;
+  border: solid 1px #e5e5eb;
+  border-radius: 10px;
+  margin:auto;
+	/* background-color: rgba(34, 221, 27, 0.979); */
+  font-weight: bold;
+}
+
+#game-create-selector {
+  text-align: center;
+  padding: 5px;
+  border-style:solid;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 20px;
+}
+
+#multiPlayer {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight:bold;
+}
+
+p.large {
+  font-size: 20px;
+  font-family: "Algerian";
+  font-weight: bold;
+}
+
+
+
+.collapsible {
+  background-color: #c6fc03;
+  color: black;
+  cursor: pointer;
+  padding: 16px;
+  width: 100%;
+  text-align: center;
+  outline: none;
+  font-size: 20px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  font-family: "Algerian";
+  font-weight:bold;
+}
+
+.active, .collapsible:hover {
+  background-color: rgba(34, 221, 27, 0.979);
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color:#E0FBFF ;
+  font-weight: bold;
+}
+button{
+  background-color: #c6fc03; 
+	font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+}
+button:hover{
+  cursor: pointer;
+}
